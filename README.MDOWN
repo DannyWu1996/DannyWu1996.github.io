@@ -1,3 +1,4 @@
 # Personal Blog for Danny Wu
 
-![blog link](dannywu1996.github.io)
+[blog link](http://dannywu1996.github.io)
+
