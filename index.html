@@ -352,29 +352,16 @@
 
       
         
-          
-            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+          <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 <h1 id="4种外部指标总结"><a href="#4种外部指标总结" class="headerlink" title="4种外部指标总结"></a>4种外部指标总结</h1><p>项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(<strong>Purity</strong> and <strong>F-Measures</strong>）</p>
-<h2 id="Purity的定义"><a href="#Purity的定义" class="headerlink" title="Purity的定义"></a>Purity的定义</h2><p>Purity的纯净度其实就是对划定好的聚类结果，对每个<strong>cluster</strong>中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg" alt="Purity"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg" alt="Purity definition"></p>
-<p>但如果集簇的数目很多时，很容易取得较高<strong>purity</strong>，比如如果每一个样本自为一类则纯净度为1，因此我们不能用纯净度作为集簇的质量和数目的<em>tradeoff</em>。</p>
-<h2 id="NMI的定义"><a href="#NMI的定义" class="headerlink" title="NMI的定义"></a>NMI的定义</h2><p>nmi主要是用来通过互信息和熵值得比值，对于$\Omega$为划分的集合，$\mathbb{C}$为总共的类别，<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9vhtfwmxj30ma0483ye.jpg" alt="NMI"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9vh5dn2ej30w807wjrk.jpg" alt="mutual information"></p>
-<h2 id="ARI的定义"><a href="#ARI的定义" class="headerlink" title="ARI的定义"></a>ARI的定义</h2><blockquote>
-<p>rule of thumb is :</p>
-<ul>
-<li>Use <strong>ARI</strong> when the ground truth clustering has large <strong>equal sized clusters</strong>   </li>
-</ul>
-</blockquote>
-<p>介绍ARI之前先介绍一个<em>Rand Index</em>(RI), 假设一个集合$S={o_1, \cdots, o_n}$和两个划分$X={X_1, \cdots, X_r}$与$Y={Y_1, \cdots, Y_s}$，可以获得以下四个统计量:</p>
-<ul>
-<li>$a$ 用来表示集合$S$中节点对若在$X$中属于同一划分同时在$Y$中也属于同一划分的数目</li>
-<li>$b$ 用来表示集合$S$中节点对若在$X$中属于不同划分同时在$Y$中也属于不同划分的数目</li>
-<li>$c$ 用来表示集合$S$中节点对若在$X$中属于同一个划分同时在$Y$中属于不同划分的数目</li>
-<li>$d$ 用来表示集合$S$中节点对若在$X$中属于不同划分同时在$Y$中也属于同一划分的数目</li>
-</ul>
-<p>则RI指标为:<br>$$RI=\frac{a+b}{a+b+c+d}=\frac{a+b}{C_{n}^{2}}$$<br>对于ARI来说其公式首先涉及到一个<em>contigency table</em><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9njp4povj30o80dmgmw.jpg" alt="contigency table"><br>表格中的$n_{ij}$代表公共元素个数对于子集$X_i$与$Y_j$: $|X_{i} \cup Y_{j}|$, 随后<em>ARI</em>的计算公式为<img src="https://tva1.sinaimg.cn/large/0082zybply1gc9nm5l903j30z205m75f.jpg" alt="ARI"></p>
-<h2 id="NMI的定义-1"><a href="#NMI的定义-1" class="headerlink" title="NMI的定义"></a>NMI的定义</h2>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/02/26/difference-between-nmi-and-ari/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

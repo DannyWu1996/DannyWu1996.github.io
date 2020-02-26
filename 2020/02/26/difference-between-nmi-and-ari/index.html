@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures） Purity的定义Purity的纯净度其实就是对划定好的聚类结果，对每个cluster中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目 但如果集簇的数目很多时，很容易取得较高pu">
+<meta name="description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NMI和ARI的区别">
 <meta property="og:url" content="http://yoursite.com/2020/02/26/difference-between-nmi-and-ari/index.html">
 <meta property="og:site_name" content="Danny&#39;blog">
-<meta property="og:description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures） Purity的定义Purity的纯净度其实就是对划定好的聚类结果，对每个cluster中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目 但如果集簇的数目很多时，很容易取得较高pu">
+<meta property="og:description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures）">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg">
@@ -93,7 +93,7 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9njp4povj30o80dmgmw.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9nm5l903j30z205m75f.jpg">
 <meta property="article:published_time" content="2020-02-26T03:06:45.000Z">
-<meta property="article:modified_time" content="2020-02-26T08:23:10.639Z">
+<meta property="article:modified_time" content="2020-02-26T08:30:46.946Z">
 <meta property="article:author" content="Danny Wu">
 <meta property="article:tag" content="聚类外部指标">
 <meta property="article:tag" content="NMI">
@@ -367,6 +367,7 @@
         <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 <h1 id="4种外部指标总结"><a href="#4种外部指标总结" class="headerlink" title="4种外部指标总结"></a>4种外部指标总结</h1><p>项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(<strong>Purity</strong> and <strong>F-Measures</strong>）</p>
+<a id="more"></a>
 <h2 id="Purity的定义"><a href="#Purity的定义" class="headerlink" title="Purity的定义"></a>Purity的定义</h2><p>Purity的纯净度其实就是对划定好的聚类结果，对每个<strong>cluster</strong>中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg" alt="Purity"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg" alt="Purity definition"></p>
 <p>但如果集簇的数目很多时，很容易取得较高<strong>purity</strong>，比如如果每一个样本自为一类则纯净度为1，因此我们不能用纯净度作为集簇的质量和数目的<em>tradeoff</em>。</p>
 <h2 id="NMI的定义"><a href="#NMI的定义" class="headerlink" title="NMI的定义"></a>NMI的定义</h2><p>nmi主要是用来通过互信息和熵值得比值，对于$\Omega$为划分的集合，$\mathbb{C}$为总共的类别，<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9vhtfwmxj30ma0483ye.jpg" alt="NMI"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9vh5dn2ej30w807wjrk.jpg" alt="mutual information"></p>
