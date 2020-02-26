@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="聚类外部指标,NMI,ARI,Purity,F-Measures," />
 
 
 
@@ -79,13 +79,29 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Danny&#39;blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures） Purity的定义Purity的纯净度其实就是对划定好的聚类结果，对每个cluster中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目 但如果集簇的数目很多时，很容易取得较高pu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NMI和ARI的区别">
+<meta property="og:url" content="http://yoursite.com/2020/02/26/difference-between-nmi-and-ari/index.html">
 <meta property="og:site_name" content="Danny&#39;blog">
+<meta property="og:description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures） Purity的定义Purity的纯净度其实就是对划定好的聚类结果，对每个cluster中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目 但如果集簇的数目很多时，很容易取得较高pu">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9vhtfwmxj30ma0483ye.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9vh5dn2ej30w807wjrk.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9njp4povj30o80dmgmw.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9nm5l903j30z205m75f.jpg">
+<meta property="article:published_time" content="2020-02-26T03:06:45.000Z">
+<meta property="article:modified_time" content="2020-02-26T08:23:10.639Z">
 <meta property="article:author" content="Danny Wu">
+<meta property="article:tag" content="聚类外部指标">
+<meta property="article:tag" content="NMI">
+<meta property="article:tag" content="ARI">
+<meta property="article:tag" content="Purity">
+<meta property="article:tag" content="F-Measures">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg">
 
 
 
@@ -115,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/02/26/difference-between-nmi-and-ari/"/>
 
 
 
 
 
-  <title>Danny'blog</title>
+  <title>NMI和ARI的区别 | Danny'blog</title>
   
 
 
@@ -140,8 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -234,9 +249,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -266,9 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/26/difference-between-nmi-and-ari/" itemprop="url">NMI和ARI的区别</a></h1>
+          <h1 class="post-title" itemprop="name headline">NMI和ARI的区别</h1>
         
 
         <div class="post-meta">
@@ -351,9 +364,7 @@
       
 
       
-        
-          
-            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 <h1 id="4种外部指标总结"><a href="#4种外部指标总结" class="headerlink" title="4种外部指标总结"></a>4种外部指标总结</h1><p>项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(<strong>Purity</strong> and <strong>F-Measures</strong>）</p>
 <h2 id="Purity的定义"><a href="#Purity的定义" class="headerlink" title="Purity的定义"></a>Purity的定义</h2><p>Purity的纯净度其实就是对划定好的聚类结果，对每个<strong>cluster</strong>中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg" alt="Purity"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg" alt="Purity definition"></p>
@@ -374,14 +385,19 @@
 </ul>
 <p>则RI指标为:<br>$$RI=\frac{a+b}{a+b+c+d}=\frac{a+b}{C_{n}^{2}}$$<br>对于ARI来说其公式首先涉及到一个<em>contigency table</em><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9njp4povj30o80dmgmw.jpg" alt="contigency table"><br>表格中的$n_{ij}$代表公共元素个数对于子集$X_i$与$Y_j$: $|X_{i} \cup Y_{j}|$, 随后<em>ARI</em>的计算公式为<img src="https://tva1.sinaimg.cn/large/0082zybply1gc9nm5l903j30z205m75f.jpg" alt="ARI"></p>
 <h2 id="NMI的定义-1"><a href="#NMI的定义-1" class="headerlink" title="NMI的定义"></a>NMI的定义</h2>
-          
-        
       
     </div>
     
     
     
 <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
   
 </div>
     
@@ -392,158 +408,44 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/25/hexo-profile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Danny Wu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Danny'blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/25/hexo-profile/" itemprop="url">hexo_profile</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-25T17:30:47+08:00">
-                2020-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9A%8F%E7%AC%94/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/%E8%81%9A%E7%B1%BB%E5%A4%96%E9%83%A8%E6%8C%87%E6%A0%87/" rel="tag"><i class="fa fa-tag"></i> 聚类外部指标</a>
           
-
+            <a href="/tags/NMI/" rel="tag"><i class="fa fa-tag"></i> NMI</a>
           
-            
+            <a href="/tags/ARI/" rel="tag"><i class="fa fa-tag"></i> ARI</a>
           
-
+            <a href="/tags/Purity/" rel="tag"><i class="fa fa-tag"></i> Purity</a>
           
+            <a href="/tags/F-Measures/" rel="tag"><i class="fa fa-tag"></i> F-Measures</a>
           
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="第一次创建自己的博客记录一下"><a href="#第一次创建自己的博客记录一下" class="headerlink" title="第一次创建自己的博客记录一下"></a>第一次创建自己的博客记录一下</h1><p>最终还是决定把自己的博客给建立起来，也希望是对自己的一个督促吧，也开始学习一下<em>markdown</em>的语法，加油</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-<div>
-  
-</div>
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/25/hexo-profile/" rel="next" title="hexo_profile">
+                <i class="fa fa-chevron-left"></i> hexo_profile
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -553,10 +455,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -564,6 +467,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -584,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -665,6 +581,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#4种外部指标总结"><span class="nav-number">1.</span> <span class="nav-text">4种外部指标总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Purity的定义"><span class="nav-number">1.1.</span> <span class="nav-text">Purity的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NMI的定义"><span class="nav-number">1.2.</span> <span class="nav-text">NMI的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARI的定义"><span class="nav-number">1.3.</span> <span class="nav-text">ARI的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NMI的定义-1"><span class="nav-number">1.4.</span> <span class="nav-text">NMI的定义</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -817,6 +749,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
