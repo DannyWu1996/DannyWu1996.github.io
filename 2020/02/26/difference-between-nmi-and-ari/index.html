@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="聚类外部指标,NMI,ARI,Purity,F-Measures," />
 
 
 
@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="title: NMI和ARI的区别date: 2020-02-26 11:06:45categories:   机器学习 聚类指标tags: 聚类外部指标 NMI ARI Purity F-Measures   4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Meas">
+<meta name="description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="difference-between-nmi-and-ari">
+<meta property="og:title" content="NMI和ARI的区别">
 <meta property="og:url" content="http://yoursite.com/2020/02/26/difference-between-nmi-and-ari/index.html">
 <meta property="og:site_name" content="Danny&#39;blog">
-<meta property="og:description" content="title: NMI和ARI的区别date: 2020-02-26 11:06:45categories:   机器学习 聚类指标tags: 聚类外部指标 NMI ARI Purity F-Measures   4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Meas">
+<meta property="og:description" content="4种外部指标总结项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(Purity and F-Measures）">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg">
@@ -92,9 +92,14 @@
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9vh5dn2ej30w807wjrk.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9njp4povj30o80dmgmw.jpg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9nm5l903j30z205m75f.jpg">
-<meta property="article:published_time" content="2020-02-26T03:06:45.549Z">
-<meta property="article:modified_time" content="2020-02-26T08:46:29.966Z">
+<meta property="article:published_time" content="2020-02-26T03:06:45.000Z">
+<meta property="article:modified_time" content="2020-02-26T08:48:12.034Z">
 <meta property="article:author" content="Danny Wu">
+<meta property="article:tag" content="聚类外部指标">
+<meta property="article:tag" content="NMI">
+<meta property="article:tag" content="ARI">
+<meta property="article:tag" content="Purity">
+<meta property="article:tag" content="F-Measures">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg">
 
@@ -132,7 +137,7 @@
 
 
 
-  <title>difference-between-nmi-and-ari | Danny'blog</title>
+  <title>NMI和ARI的区别 | Danny'blog</title>
   
 
 
@@ -276,7 +281,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">difference-between-nmi-and-ari</h1>
+          <h1 class="post-title" itemprop="name headline">NMI和ARI的区别</h1>
         
 
         <div class="post-meta">
@@ -298,6 +303,39 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E6%8C%87%E6%A0%87/" itemprop="url" rel="index">
+                    <span itemprop="name">聚类指标</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -327,18 +365,8 @@
 
       
         <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-<hr>
-<p>title: NMI和ARI的区别<br>date: 2020-02-26 11:06:45<br>categories: </p>
-<ul>
-<li>机器学习</li>
-<li>聚类指标<br>tags:</li>
-<li>聚类外部指标</li>
-<li>NMI</li>
-<li>ARI</li>
-<li>Purity</li>
-<li>F-Measures</li>
-</ul>
-<hr>
+
+
 <h1 id="4种外部指标总结"><a href="#4种外部指标总结" class="headerlink" title="4种外部指标总结"></a>4种外部指标总结</h1><p>项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(<strong>Purity</strong> and <strong>F-Measures</strong>）</p>
 <a id="more"></a>
 <h2 id="Purity的定义"><a href="#Purity的定义" class="headerlink" title="Purity的定义"></a>Purity的定义</h2><p>Purity的纯净度其实就是对划定好的聚类结果，对每个<strong>cluster</strong>中数目最多的一类作为该集簇的类别，从而计算样本正确分配到相应集簇的数目<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9u2owq12j317c0jet9m.jpg" alt="Purity"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gc9utot22aj30oa03a3yf.jpg" alt="Purity definition"></p>
@@ -381,6 +409,20 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E8%81%9A%E7%B1%BB%E5%A4%96%E9%83%A8%E6%8C%87%E6%A0%87/" rel="tag"><i class="fa fa-tag"></i> 聚类外部指标</a>
+          
+            <a href="/tags/NMI/" rel="tag"><i class="fa fa-tag"></i> NMI</a>
+          
+            <a href="/tags/ARI/" rel="tag"><i class="fa fa-tag"></i> ARI</a>
+          
+            <a href="/tags/Purity/" rel="tag"><i class="fa fa-tag"></i> Purity</a>
+          
+            <a href="/tags/F-Measures/" rel="tag"><i class="fa fa-tag"></i> F-Measures</a>
+          
+        </div>
       
 
       
@@ -491,7 +533,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">categories</span>
                 
               </div>
@@ -502,7 +544,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
