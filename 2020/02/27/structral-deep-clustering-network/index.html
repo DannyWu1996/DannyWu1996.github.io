@@ -7,15 +7,24 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title></title>
+<title>Structral Deep Clustering Network</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="http://dannywu1996.github.io/index.html">
+    <meta name="description" content="Structral Deep Clustering NetworkWWW2020本文为尝试将结构化信息建模在深度聚类任务中，并提出了全新的结构化深度聚类模型，其中包括一个DNN模块、GCN模块和双重自监督模块，并通过一个delivery operator成功将autoencoder和GCN所学到的表示结合在一起，并从理论上证明了其有效性。Paper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Structral Deep Clustering Network">
+<meta property="og:url" content="http://dannywu1996.github.io/2020/02/27/structral-deep-clustering-network/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="Structral Deep Clustering NetworkWWW2020本文为尝试将结构化信息建模在深度聚类任务中，并提出了全新的结构化深度聚类模型，其中包括一个DNN模块、GCN模块和双重自监督模块，并通过一个delivery operator成功将autoencoder和GCN所学到的表示结合在一起，并从理论上证明了其有效性。Paper">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
+<meta property="article:published_time" content="2020-02-27T02:04:29.000Z">
+<meta property="article:modified_time" content="2020-02-27T14:45:28.123Z">
+<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Unsupervised">
+<meta property="article:tag" content="Deep Clustering">
+<meta property="article:tag" content="GNN">
+<meta property="article:tag" content="Autoencoder">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://dannywu1996.github.io/images/og_image.png">
 
@@ -75,7 +84,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="" height="28">
+                <img src="/images/logo.svg" alt="Structral Deep Clustering Network" height="28">
             
             </a>
         </div>
@@ -83,7 +92,7 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item is-active"
+                <a class="navbar-item"
                 href="/">Home</a>
                 
                 <a class="navbar-item"
@@ -125,7 +134,6 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-    
 <div class="card">
     
     <div class="card-content article ">
@@ -146,26 +154,65 @@
                 </span>
                 
                 
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
+                
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/02/27/structral-deep-clustering-network/">Structral Deep Clustering Network</a>
+                Structral Deep Clustering Network
             
         </h1>
         <div class="content">
             <h1 id="Structral-Deep-Clustering-Network"><a href="#Structral-Deep-Clustering-Network" class="headerlink" title="Structral Deep Clustering Network"></a>Structral Deep Clustering Network</h1><p><strong>WWW2020</strong><br>本文为尝试将结构化信息建模在深度聚类任务中，并提出了全新的结构化深度聚类模型，其中包括一个DNN模块、GCN模块和双重自监督模块，并通过一个delivery operator成功将autoencoder和GCN所学到的表示结合在一起，并从理论上证明了其有效性。<a href="https://arxiv.org/abs/2002.01633">Paper</a> </p>
+<a id="more"></a>
+<h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>深度聚类算法目前取得了不错的效果，但是大多数依赖于深度模型的表征能力，比如自编码器（autoencoder），这类深度聚类方法的能力在于提取数据本身的表示，而缺少对数据的结构的建模，本文基于GCN提出Structral Deep Clustering Network(SDCN)，利用delivery operator将自编码器中学到的表示传入对应GCN层中，然后通过一个<strong>双自监督机制</strong>将两个模型进行整合并一起更新，从而将结构信息融合到自编码器所生成的表示中。本文还对所提出的delivery operator进行理论分析，在这个算子下，GCN作为自编码器的高阶图正则化约束（high-order graph regularization constraint），自编码器可以缓解GCN过平滑（over-smoothing）的问题。在多个任务上取得了<strong>SOTA</strong>的效果。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>聚类任务实质自安于将相似样本归于同一类，深度聚类的基本思想在于将聚类任务和深度学习的表征能力结合，通过学习更有效的数据表示来提升聚类效果，类似的方法只考虑数据本身的特征却忽略了数据的结构信息。<br>文中提出在深度聚类中结合结构化信息有以下两个难点：</p>
+<ul>
+<li>哪些结构化信息需要被考虑？<strong>低阶与高阶邻居</strong></li>
+<li>结构化信息和深度聚类之间的关系？<strong>DNN每层与多种类型结构信息之间的联系</strong><br>为了捕获数据的结构化信息，我们首先用KNN构图，用GCN去捕获KNN图中的低阶和高阶的结构信息，从而获得GCN-specific表示。<br>为了在深度聚类中引入结构化信息，我们利用autoencoder模块捕捉数据的表示，并提出delivery operator将从GCN中或得到的表示与autoencoder获得的表示进行整合，同时我们证明在delivery operator的帮助下，GCN可以为autoencoder提供二阶图正则化，autoencoder则减轻了GCN过平滑的问题。<br>由于两个模块均能输出数据表示，我们提出双自监督模块对GCN和autoencoder模块进行统一训练，实验表明提出的SDCN在六个数据集上取得了<strong>SOTA</strong>效果。</li>
+</ul>
+<h2 id="THE-PROPOSED-MODEL"><a href="#THE-PROPOSED-MODEL" class="headerlink" title="THE PROPOSED MODEL"></a>THE PROPOSED MODEL</h2><p><img src="https://tva1.sinaimg.cn/large/0082zybply1gcawku3wxwj312i0j4wft.jpg" alt="SDCN"></p>
+<h3 id="KNN-Graph"><a href="#KNN-Graph" class="headerlink" title="KNN Graph"></a>KNN Graph</h3><p>这一部分就是利用KNN对每个样本进行计算相似度，对每个样本取<em>top-K</em>的邻居生成相应的边。我们用了两种方法计算样本之间的相似度：</p>
+<p>1) <strong>Heat Kernel</strong>:<br>$$ S_{ij}=e^{- \frac{||x_{i}-x_{j}||^{2}}{t}}$$<br>2) <strong>Dot-product</strong>:<br>$$ S_{ij}=x_{j}^T * x_{i}  $$</p>
+<h3 id="DNN-Module"><a href="#DNN-Module" class="headerlink" title="DNN Module"></a>DNN Module</h3><p>为了通用性，在本文中我们仅使用basic autoencoder从raw data中获取表示以适应不同的数据特征。最后将decoder的输出与原始数据的输入进行构造重构误差<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcax8u61hoj30tq03et8l.jpg" alt="encoder"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcaxb1meqcj30tm036wed.jpg" alt="decoder"><br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcaxaprkj5j30tk04ct8m.jpg" alt="reconstruction"></p>
+<h3 id="GCN-Module"><a href="#GCN-Module" class="headerlink" title="GCN Module"></a>GCN Module</h3><p>L层autoencoder获得到多种数据表示$\mathbf{H}^1, \mathbf{H}^2, \cdots, \mathbf{H}^L$，但是忽略了样本之间的联系，本模块用GCN来捕捉结构信息，<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcaxvnexxdj30ts034glh.jpg" alt="gcn"><br>我们认为每一层autoencoder的输出都包含了不同的信息且能够对原始数据进行重构，于是使用一个超参$\epsilon=0.5$对两个模型所获取到的表示进行融合<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcaxxdzjk5j30ts02ma9y.jpg" alt="fuse"><br>将最后一层的输出投射到相应的label维度，然后利用<em>softmax</em>进行归一化。</p>
+<h3 id="Dual-Self-Supervised-Module"><a href="#Dual-Self-Supervised-Module" class="headerlink" title="Dual Self-Supervised Module"></a>Dual Self-Supervised Module</h3><p>我们虽然已经将autoencoder和GCN整合在一起，但是还未针对深度聚类任务进行构造，通常autoencoder适用于无监督任务，而GCN则应用于半监督任务，因此不能直接应用到聚类问题上。我们提出一个双自监督模块，对两者进行整合，并进行端到端训练用于聚类任务。对于$i-th$样本和$j-th$集簇，使用学生t-分布作为相似度计算核函数，从而计算节点与簇中央节点（预训练autoencoder的表示经过K-Means获得）的相似度。（注意$\mathbf{H}$是从autoencoder中学习到的表示，而$\mathbf{Z}$是GCN模块输出的表示）<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcaydggoxqj30to052wek.jpg" alt="Q distribution"><br>$q_{ij}$可以视为样本$i$分到$j$集簇的概率，我们将$Q=[q_{ij}]$作为所有样本指派的分布，然后我们将利用KL Divergence对表示进行更新使$Q$分布趋近于$P$分布（自监督，因为P分布是从Q分布中获得，又监督Q分布的更新过程）<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcb10kzn75j30ue04s746.jpg" alt="P distribution"><br>$P$分布的目的让节点表示趋近于其集簇中央，是集簇更紧密，$f_{j}=\sum_{i}{q_{ij}}$<br>对于训练GCN模块，如果将上面集簇的指派作为真实标签，容易带来噪音和Trivial Solution，使整个模型训练崩塌，因此我们可以让GCN最后一层输出（分类层）的$Z$分布同时也趋近与$P$分布，同样也利用KL Divergence。这里使用KL散度作为目标函数有两个好处：</p>
+<blockquote>
+<ul>
+<li>传统的多分类损失函数相比，KL散度可以更缓和的更新整个模型，避免嵌入有过大的波动</li>
+<li>GCN和DNN整合使用同一个优化目标，让训练过程更加一致</li>
+</ul>
+</blockquote>
+<p>模型最终的损失函数如下所示：<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcb1zb47blj30ts02sglg.jpg" alt="loss function"><br>最后将模型GCN模块的最终输出Z作为最终的聚类结果，因为GCN中包含了结构信息和数据自身特征<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcb22fkv48j30u202w744.jpg" alt="final output"></p>
+<h3 id="Theory-Analysis"><a href="#Theory-Analysis" class="headerlink" title="Theory Analysis"></a>Theory Analysis</h3><p>暂略</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>我们对6个数据集进行了实验，包括USPS、HHAR、Reuters、ACM、DBLP、Citeseer，对比了6个baseline，并在四个指标上进行了实验，实验结果如下所示<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcb2acxwydj31dq0t6q7j.jpg" alt="experiment result"></p>
+<h3 id="Analysis-of-Clustering-Results"><a href="#Analysis-of-Clustering-Results" class="headerlink" title="Analysis of Clustering Results"></a>Analysis of Clustering Results</h3><ul>
+<li>对于ACM、DBLP、Citeseer直接用原始图作为输入，可以从表格中看到提出的SDCN在4个指标上都要超越其他baseline，</li>
+<li>SDCN普遍高于$SDCN_Q$，表明结构化信息的作用，但同时也依赖于一个噪音少的初始网络</li>
+<li>对于已经有网络结构的，GCN类的方法要优于基于自编码器的方法，否则相反。构造好的网络很重要！！</li>
+</ul>
+<h3 id="Analysis-of-Different-Propagation-Layers"><a href="#Analysis-of-Different-Propagation-Layers" class="headerlink" title="Analysis of Different Propagation Layers"></a>Analysis of Different Propagation Layers</h3><p>通过固定住autoencoder的层数4层去观察，GCN的层数对模型性能的影响：</p>
+<ul>
+<li>增加GCN层数提升了聚类的性能，并且4层GCN效果最好，因为自编码器每一层所捕获的信息不同，4层GCN也能保存对应每一层自编码器所学到的表示</li>
+<li>3层效果普遍比如2层，因为3层GCN用使用到第二层自编码器的结果，是一个转移层，信息有所丢失，且2层GCN的过平滑效果不严重<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcb40xok4kj30ok0ncdh1.jpg" alt="propagation layer effect"><h3 id="K-sensitivity-Analysis"><a href="#K-sensitivity-Analysis" class="headerlink" title="K-sensitivity Analysis"></a>K-sensitivity Analysis</h3>不同的$K$值效果有差异，但是普遍在$k=3$或$k=5$时取得最好的效果，$k=1$时缺少结构信息，$k=10$时社区之间重叠程度过高。<br><img src="https://tva1.sinaimg.cn/large/0082zybply1gcb48r7qknj30ty0qqgmu.jpg" alt="K值"></li>
+</ul>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/27/structral-deep-clustering-network/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Autoencoder/" rel="tag">Autoencoder</a>, <a class="has-link-grey -link" href="/tags/Deep-Clustering/" rel="tag">Deep Clustering</a>, <a class="has-link-grey -link" href="/tags/Deep-Learning/" rel="tag">Deep Learning</a>, <a class="has-link-grey -link" href="/tags/GNN/" rel="tag">GNN</a>, <a class="has-link-grey -link" href="/tags/Unsupervised/" rel="tag">Unsupervised</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -175,116 +222,19 @@
 
 
 
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-26T03:06:45.000Z">2020-02-26</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E8%81%9A%E7%B1%BB%E6%8C%87%E6%A0%87/">聚类指标</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    4 minutes read (About 619 words)
-                </span>
-                
-                
-            </div>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/26/difference-between-nmi-and-ari/">
+                <span class="level-item">聚类外部指标总结</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/26/difference-between-nmi-and-ari/">聚类外部指标总结</a>
-            
-        </h1>
-        <div class="content">
-            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-
-<h1 id="4种外部指标总结"><a href="#4种外部指标总结" class="headerlink" title="4种外部指标总结"></a>4种外部指标总结</h1><p>项目中要用到NMI和ARI两个指标，但是一直不太理解这两个指标究竟侧重点是什么，正好做一下记录，顺便对另外两种外部指标也进行一个调研(<strong>Purity</strong> and <strong>F-Measures</strong>）</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/26/difference-between-nmi-and-ari/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
         
     </div>
 </div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-25T09:30:47.000Z">2020-02-25</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    a few seconds read (About 61 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/25/hexo-profile/">hexo_profile</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="第一次创建自己的博客记录一下"><a href="#第一次创建自己的博客记录一下" class="headerlink" title="第一次创建自己的博客记录一下"></a>第一次创建自己的博客记录一下</h1><p>最终还是决定把自己的博客给建立起来，也希望是对自己的一个督促吧，也开始学习一下<em>markdown</em>的语法，加油</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2020/02/25/hexo-profile/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
 
 
 </div>
@@ -819,11 +769,11 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="" height="28">
+                    <img src="/images/logo.svg" alt="Structral Deep Clustering Network" height="28">
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2020 &nbsp;
+                &copy; 2020 Structral Deep Clustering Network&nbsp;
                 Danny Wu Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
                         href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
                 
