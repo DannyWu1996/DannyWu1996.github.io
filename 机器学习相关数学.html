@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
 <meta property="article:published_time" content="2020-02-29T06:46:46.000Z">
-<meta property="article:modified_time" content="2020-02-29T07:23:18.836Z">
+<meta property="article:modified_time" content="2020-03-02T15:35:48.966Z">
 <meta property="article:tag" content="math">
 <meta property="article:tag" content="deeplearning">
 <meta property="article:tag" content="论文分享">
@@ -148,7 +148,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    a minute read (About 223 words)
+                    3 minutes read (About 424 words)
                 </span>
                 
                 
@@ -171,8 +171,13 @@
 
 <ul>
 <li>Contraction Mapping</li>
+<li>Mutual Information</li>
 </ul>
 <h2 id="Contraction-Mapping"><a href="#Contraction-Mapping" class="headerlink" title="Contraction Mapping"></a><a href="https://en.wikipedia.org/wiki/Contraction_mapping">Contraction Mapping</a></h2><p>一个收缩映射（contraction mapping）可以看做在度量空间（metric space） $(M,d)$中从$M$映射到自己本身的函数$f$，其满足对于任意$x \in M, y \in M$,<br>$$d(f(x), f(y)) \le kd(x,y), \tag{1}$$其中$0 \le k \le 1$，$k$最小的那个值被叫做该映射$f$的Lipschitz constant。<br>同样这个概念可以推广到任意两个度量空间$(M, d), (N, d’)$上，对于$f\colon M\rightarrow N$，$f$为收缩映射时满足存在一个常量$k&lt;1$，使所有$x,y \in M$满足<br>$$d’(f(x), f(y)) \le kd(x,y) \tag{2}$$</p>
+<h2 id="Mutual-Information"><a href="#Mutual-Information" class="headerlink" title="Mutual Information"></a><a href="https://machinelearningmastery.com/information-gain-and-mutual-information/">Mutual Information</a></h2><blockquote>
+<p>Mutual information is calculated between two variables and measures the reduction in uncertainty for one variable given a known value of the other variable.</p>
+</blockquote>
+<p>总的来说互信息就是为了衡量两个随机变量之间的依赖性，对于随机变量$X$和$Y$，他们之间的互信息$I(X;Y)$可以用以下公式来计算：<br>$$I(X;Y)=H(X)-H(X|Y) \tag{3}$$<br>其中$H(X)$为随机变量$X$的熵(entropy)，$H(X|Y)$为给定随机变量$Y$后$X$的条件熵，显然如果两个随机变量互相独立，则其互信息为$0$，给定$Y$的信息不会对$X$减少任何不确定性，互信息越大，意味着两个随机变量之间的依赖程度越高。</p>
 
         </div>
         
