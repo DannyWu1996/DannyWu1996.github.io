@@ -7,19 +7,29 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Tag: math</title>
+<title>heterogeneous_graph_transformer</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="http://dannywu1996.github.io/tags/math/index.html">
+    <meta name="description" content="Heterogeneous Graph Transformer本文提出了异质图上transformer结构HGT，保留节点特征分布异质性，提出元关系，并使用基于元关系计算相似度替代点乘，模型中利用相对时间差对动态图进行建模并提出HGSampling方法以解决规模大的图结构，在多个节点分类与链接预测任务上相较其他HGNN取得SOTA效果。paper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="heterogeneous_graph_transformer">
+<meta property="og:url" content="http://dannywu1996.github.io/heterogeneous-graph-transformer.html">
 <meta property="og:site_name">
+<meta property="og:description" content="Heterogeneous Graph Transformer本文提出了异质图上transformer结构HGT，保留节点特征分布异质性，提出元关系，并使用基于元关系计算相似度替代点乘，模型中利用相对时间差对动态图进行建模并提出HGSampling方法以解决规模大的图结构，在多个节点分类与链接预测任务上相较其他HGNN取得SOTA效果。paper">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
+<meta property="article:published_time" content="2020-03-11T15:11:10.000Z">
+<meta property="article:modified_time" content="2020-03-14T16:55:30.094Z">
+<meta property="article:tag" content="heterogeneous information network">
+<meta property="article:tag" content="transformer">
+<meta property="article:tag" content="graph attention">
+<meta property="article:tag" content="graph neural network">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://dannywu1996.github.io/images/og_image.png">
 
 
+    <meta name="keywords" content="heterogeneous information network,transformer,graph attention,graph neural network,">
+    
 
 
 
@@ -75,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="" height="28">
+                <img src="/images/logo.svg" alt="heterogeneous_graph_transformer" height="28">
             
             </a>
         </div>
@@ -124,58 +134,71 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">math</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-29T06:46:46.000Z">2020-02-29</time>
+                <time class="level-item has-text-grey" datetime="2020-03-11T15:11:10.000Z">2020-03-11</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E6%95%B0%E5%AD%A6/">数学</a>
+                <a class="has-link-grey -link" href="/categories/%E8%AE%BA%E6%96%87%E5%88%86%E4%BA%AB/">论文分享</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 minutes read (About 424 words)
+                    9 minutes read (About 1314 words)
                 </span>
                 
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E6%95%B0%E5%AD%A6.html">机器学习相关数学笔记</a>
+                heterogeneous_graph_transformer
             
         </h1>
         <div class="content">
-            <h1 id="机器学习中所涉及到数学知识"><a href="#机器学习中所涉及到数学知识" class="headerlink" title="机器学习中所涉及到数学知识"></a>机器学习中所涉及到数学知识</h1><p>接下来持续更新会对看论文过程中所遇到的一些不理解的数学知识进行汇总，方便以后进行查阅</p>
+            <h1 id="Heterogeneous-Graph-Transformer"><a href="#Heterogeneous-Graph-Transformer" class="headerlink" title="Heterogeneous Graph Transformer"></a>Heterogeneous Graph Transformer</h1><p>本文提出了异质图上transformer结构HGT，保留节点特征分布异质性，提出元关系，并使用基于元关系计算相似度替代点乘，模型中利用相对时间差对动态图进行建模并提出HGSampling方法以解决规模大的图结构，在多个节点分类与链接预测任务上相较其他HGNN取得<em>SOTA</em>效果。<a href="https://arxiv.org/abs/2003.01332">paper</a></p>
+<a id="more"></a>
+<h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>近年来提出的GNN多应用于同质图，考虑节点和边都属于同一种类型，而我们提出<strong>Heterogeneous Graph Transformer</strong> (HGT)模型可以解决Web-scale的异质图，为了捕获其异质性，我们设计了节点类型与边类型依赖的参数已使用异质图注意力机制，使模型维护了不同类型节点和边的专用表示。为了应对动态异质图，我们提出了相对时间编码机制来捕捉任意时刻的动态结构依赖性。同时我们设计了异质图mini-batch采样算法HGSampling使模型更高效。多种下游任务表明我们模型超越多个<em>SOTA</em> GNN baseline。</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>传统的异质图方法，如PathSim，metapath2vec等都需要通过预先定义meta-path元路径来建模异质结构，而近来也有将GNN应用到异质图中的工作，但他们也有以下问题：</p>
+<ul>
+<li>大多数GNN也依赖于预先定于元路径</li>
+<li>通常这些GNN模型假设所有节点和边特征均属于同一个特征空间，或者为每一种类型设定独有的投射矩阵，使其无法有效捕捉异质图上的性质</li>
+<li>通常忽略了异质图的动态性</li>
+<li>没法应用于大规模的异质图中</li>
+</ul>
+<p>比如OAG中每个节点和边有着不同的特征分布，比如文章有文本特征而机构则其特征来自于其学者，并且共同作者关系和引用关系显然不同。OAG明显是在不断演化，比如发表数目增长，会议关注点的变更，且大量的节点数目与边的数目。<br>考虑到这些问题和挑战，我们提出了异质图神经网络，其实现了保留节点和边依赖的表示、捕捉网络动态性、避免元路径定义、可扩展到大规模网络等四个功能。<br>为了解决图的异质性，我们提出了节点和边类型依赖度额注意力机制，模型中所用的异质互注意力(mutual attention) 基于将边$e={s,t}$拆解为元关系三元组$&lt;s节点类型，边类型，t节点类型&gt;$. 于是我们通过这些元关系设置相应的权重矩阵来计算连边上的注意力值，这样每一个不同类型的节点和边都刻意保留其特有的特征空间。与此同时，对于类型不同且相连的节点仍可以在不影响其特征分布的前提下进行传递信息。HGT也可以通过叠加多层来获得高阶邻居的信息，同时可以被视为一种”soft”元路径，即便无需设置元路径，通过所提出的注意力机制也可以自动学到隐式元路径服务于下游任务。<br>同时为了建模图的动态性，我们提出相对时间编码（RTE）策略，将不同时刻的所有边全都作为一个整体而不对其基于时间片切分，RTE能够建模任意长度时间下的结构依赖性，并作为到未曾出现的未来时刻。最终，RTE使HGT能自动学习到这种时间依赖于异质图的演变。<br>同时我们提出HGSampling采样策略以应对大规模的图数据，其衷心思想通过采样异质子图使不同类型节点具有相同的比例，同时尽可能使子图紧密使信息得以保留，也使HGT可以应用于任意大小的异质图。<br>我们在OAG数据上展现了模型的有效性，该数据集包含1.79亿个节点和20亿条边，并且涵盖了1900到2019年所有的数据（这个规模未曾在异质图使用），实验表明我们的模型比其他SOTA的GNN模型与异质图专用模型效果要好9-21%，并且实验表明该模型可以自动获取隐元路径在不同任务下的权重。</p>
+<h2 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h2><ul>
+<li>Heterogeneous Graph：异质图定义不说了</li>
+<li>Meta Relation：参照原文</li>
+<li>Dynamic Heterogeneous Graph： 引入不同个时间片，给边赋予时间，详情参照原文定义</li>
+</ul>
+<h2 id="HETEROGENEOUS-GRAPH-TRANSFORMER"><a href="#HETEROGENEOUS-GRAPH-TRANSFORMER" class="headerlink" title="HETEROGENEOUS GRAPH TRANSFORMER"></a>HETEROGENEOUS GRAPH TRANSFORMER</h2><p>该模型可以被拆分为三个模块，异质互注意力模块、异质消息传递模块、类型聚集模块</p>
+<h3 id="Heterogeneous-Mutual-Attention"><a href="#Heterogeneous-Mutual-Attention" class="headerlink" title="Heterogeneous Mutual Attention"></a>Heterogeneous Mutual Attention</h3><p>先基于如下公式进行计算</p>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9B%B8%E5%85%B3%E6%95%B0%E5%AD%A6.html#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/Deep-Learning/" rel="tag">Deep Learning</a>, <a class="has-link-grey -link" href="/tags/GNN/" rel="tag">GNN</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -185,7 +208,19 @@
 
 
 
-
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/random-walks-and-markov-chains.html">
+                <span class="level-item">random_walks_and_markov_chains</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -872,11 +907,11 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="" height="28">
+                    <img src="/images/logo.svg" alt="heterogeneous_graph_transformer" height="28">
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2020 &nbsp;
+                &copy; 2020 heterogeneous_graph_transformer&nbsp;
                 Danny Wu Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
                         href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
                 
