@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
 <meta property="article:published_time" content="2020-03-11T15:11:10.000Z">
-<meta property="article:modified_time" content="2020-03-14T16:57:16.638Z">
+<meta property="article:modified_time" content="2020-03-18T18:38:53.595Z">
 <meta property="article:tag" content="heterogeneous information network">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="graph attention">
@@ -151,7 +151,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    9 minutes read (About 1314 words)
+                    13 minutes read (About 1999 words)
                 </span>
                 
                 
@@ -174,19 +174,39 @@
 <h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>近年来提出的GNN多应用于同质图，考虑节点和边都属于同一种类型，而我们提出<strong>Heterogeneous Graph Transformer</strong> (HGT)模型可以解决Web-scale的异质图，为了捕获其异质性，我们设计了节点类型与边类型依赖的参数已使用异质图注意力机制，使模型维护了不同类型节点和边的专用表示。为了应对动态异质图，我们提出了相对时间编码机制来捕捉任意时刻的动态结构依赖性。同时我们设计了异质图mini-batch采样算法HGSampling使模型更高效。多种下游任务表明我们模型超越多个<em>SOTA</em> GNN baseline。</p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>传统的异质图方法，如PathSim，metapath2vec等都需要通过预先定义meta-path元路径来建模异质结构，而近来也有将GNN应用到异质图中的工作，但他们也有以下问题：</p>
 <ul>
-<li>大多数GNN也依赖于预先定于元路径</li>
-<li>通常这些GNN模型假设所有节点和边特征均属于同一个特征空间，或者为每一种类型设定独有的投射矩阵，使其无法有效捕捉异质图上的性质</li>
+<li>大多数GNN也依赖于预先定于<strong>元路径</strong>，需要专家经验</li>
+<li>通常这些GNN模型假设所有节点和边特征均属于同一个特征空间，或者为每一种类型设定<strong>non-sharing</strong>的投射矩阵，导致这些模型无法充分捕捉图上的异质性</li>
 <li>通常忽略了异质图的动态性</li>
 <li>没法应用于大规模的异质图中</li>
 </ul>
-<p>比如OAG中每个节点和边有着不同的特征分布，比如文章有文本特征而机构则其特征来自于其学者，并且共同作者关系和引用关系显然不同。OAG明显是在不断演化，比如发表数目增长，会议关注点的变更，且大量的节点数目与边的数目。<br>考虑到这些问题和挑战，我们提出了异质图神经网络，其实现了保留节点和边依赖的表示、捕捉网络动态性、避免元路径定义、可扩展到大规模网络等四个功能。<br>为了解决图的异质性，我们提出了节点和边类型依赖度额注意力机制，模型中所用的异质互注意力(mutual attention) 基于将边$e={s,t}$拆解为元关系三元组$&lt;s节点类型，边类型，t节点类型&gt;$. 于是我们通过这些元关系设置相应的权重矩阵来计算连边上的注意力值，这样每一个不同类型的节点和边都刻意保留其特有的特征空间。与此同时，对于类型不同且相连的节点仍可以在不影响其特征分布的前提下进行传递信息。HGT也可以通过叠加多层来获得高阶邻居的信息，同时可以被视为一种”soft”元路径，即便无需设置元路径，通过所提出的注意力机制也可以自动学到隐式元路径服务于下游任务。<br>同时为了建模图的动态性，我们提出相对时间编码（RTE）策略，将不同时刻的所有边全都作为一个整体而不对其基于时间片切分，RTE能够建模任意长度时间下的结构依赖性，并作为到未曾出现的未来时刻。最终，RTE使HGT能自动学习到这种时间依赖于异质图的演变。<br>同时我们提出HGSampling采样策略以应对大规模的图数据，其衷心思想通过采样异质子图使不同类型节点具有相同的比例，同时尽可能使子图紧密使信息得以保留，也使HGT可以应用于任意大小的异质图。<br>我们在OAG数据上展现了模型的有效性，该数据集包含1.79亿个节点和20亿条边，并且涵盖了1900到2019年所有的数据（这个规模未曾在异质图使用），实验表明我们的模型比其他SOTA的GNN模型与异质图专用模型效果要好9-21%，并且实验表明该模型可以自动获取隐元路径在不同任务下的权重。</p>
-<h2 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h2><ul>
-<li>Heterogeneous Graph：异质图定义不说了</li>
-<li>Meta Relation：参照原文</li>
-<li>Dynamic Heterogeneous Graph： 引入不同个时间片，给边赋予时间，详情参照原文定义</li>
+<p>比如OAG(<em>Open Acadamic Graph</em>)中每个节点和边有着<strong>不同的特征分布</strong>，比如文章有文本特征(<em>Text Feature</em>))而机构则其特征来自于附属该机构的学者，共同作者关系和引用关系显然不同。OAG明显是在不断演化，比如文章发表数目增长，会议关注点的变更(KDD在1990年与数据库更相关)，OAG的图结构中存在大量的节点数目与边的数目。</p>
+<p>考虑到这些问题和挑战，我们提出了<strong>异质图神经网络</strong>，其实现了如下四个特点：</p>
+<ul>
+<li>保留节点类型和边类型<strong>依赖</strong>(<em>node-type dependent</em>)的表示</li>
+<li>捕捉网络动态性</li>
+<li>避免预定义元路径</li>
+<li>可扩展到大规模网络</li>
 </ul>
-<h2 id="HETEROGENEOUS-GRAPH-TRANSFORMER"><a href="#HETEROGENEOUS-GRAPH-TRANSFORMER" class="headerlink" title="HETEROGENEOUS GRAPH TRANSFORMER"></a>HETEROGENEOUS GRAPH TRANSFORMER</h2><p>该模型可以被拆分为三个模块，异质互注意力模块、异质消息传递模块、类型聚集模块</p>
-<h3 id="Heterogeneous-Mutual-Attention"><a href="#Heterogeneous-Mutual-Attention" class="headerlink" title="Heterogeneous Mutual Attention"></a>Heterogeneous Mutual Attention</h3><p>先基于如下公式进行计算</p>
+<p>为了解决图的异质性，我们提出了节点和边类型依赖的注意力机制，模型中所用的异质互注意力(<em>mutual attention</em>) 通过将边$e={s,t}$拆解为元关系三元组$&lt;s节点类型，边类型，t节点类型&gt;$，对这些元关系设置相应的权重矩阵来计算连边上的注意力值，这样每一个不同类型的节点和边都刻意保留其特有的特征空间。与此同时，对于类型不同的节点仍可以在不影响其特征分布的前提下进行传递信息。HGT也可以通过<strong>message passing</strong>的机制来叠加多层来获得高阶邻居的信息，从某种程度上也是定义了<em>soft meta-path</em>，无需通过预定义元路径，而是利用所提出的注意力机制自动学到隐式元路径服务于下游任务。</p>
+<p>同时为了建模图的动态性，我们提出相对时间编码(<em>relative temporal encoding</em>)策略，将不同时刻的所有边全都作为一个整体而不对其基于时间片切分，RTE能够建模任意长度时间下的结构依赖性，并作为到未曾出现的未来时刻。最终，RTE使HGT能自动学习到这种时间依赖于异质图的演变。</p>
+<p>同时我们提出HGSampling采样策略以应对大规模的图数据，其核心思想通过采样异质子图使不同类型节点具有相同的比例，而目前的诸如GraphSage, FastGCN, LADIES都会导致一个采样出来的节点类型与边类型 <em>highly imbalanced</em> 的分布。并且HGSampling尽可能使子图紧密使信息得以保留，并可以应用于 <em>arbitrary-size</em> 的异质图。</p>
+<p>我们在OAG数据上展现了模型的有效性，该数据集包含1.79亿个节点和20亿条边，并且涵盖了1900到2019年所有的数据（这个规模未曾在异质图使用），实验表明我们的模型比其他SOTA的GNN模型与异质图专用模型效果要好9-21%，并且实验表明该模型可以自动获取隐元路径在不同任务下的权重。</p>
+<h2 id="PRELIMINARIES"><a href="#PRELIMINARIES" class="headerlink" title="PRELIMINARIES"></a>PRELIMINARIES</h2><h3 id="Heterogeneous-Graph-Mining"><a href="#Heterogeneous-Graph-Mining" class="headerlink" title="Heterogeneous Graph Mining"></a>Heterogeneous Graph Mining</h3><ul>
+<li>Heterogeneous Graph：异质图可以定义为一个有向图$G=(\mathcal{V}, \mathcal{E}, \mathcal{A}, \mathcal{R})$，节点$v \in \mathcal{V}$与边$e \in \mathcal{E}$都有对应映射函数 $\tau(v) \colon V \rightarrow \mathcal{A}$与$\phi(e) \colon E \rightarrow \mathcal{R}$。异质图满足$|\tau(v)| + |\phi(e)| &gt;2$。</li>
+<li>Meta Relation：对于任意一条边$e=(s,t)$，其元关系(meta relation)可以定义为$&lt;\tau(s), \phi(e), \tau(t)&gt;$，$\phi(e)^{-1}$则是inverse of $\phi(e)$. 为了更好的建模这种数据之间的异质性，在异质图中假设两个节点之间可以存在多种元关系。<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcykup1w48j30uc0gcmyn.jpg" alt=""></li>
+<li>MetaPath：元路径$\Phi$ 可以理解为由元关系所组成的序列 $\mathcal{A}<em>1 \stackrel{\mathcal{R}_1}{\rightarrow} \mathcal{A}_2 \stackrel{\mathcal{R}_2}{\rightarrow} \cdots \stackrel{\mathcal{R}_L}{\rightarrow} \mathcal{A}</em>{L+1}$ (or $\Phi = \mathcal{A}<em>1 \rightarrow \mathcal{A}_2 \rightarrow \cdots \rightarrow \mathcal{A}</em>{L+1}$)</li>
+<li>Dynamic Heterogeneous Graph： 为了建模图的动态性，我们认为每一条边的时间是固定在，取决于其生成边的时刻，于是可以对每一条边$e=(s,t)$赋予一个时间戳$T$，表明$s$在$T$时刻与$t$相连，而对于节点来说，一个可以赋予多个时间戳，例如WWW@1994就是第一节WWW会议，其主要关注点在 Internet Protocol 和 Web Infrastructure, 而对于WWW@2020来说关注 social analysis, computing search, IR, privacy and society 等等</li>
+</ul>
+<h3 id="Graph-Neural-Network"><a href="#Graph-Neural-Network" class="headerlink" title="Graph Neural Network"></a>Graph Neural Network</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcym8e7hawj30tc07wwex.jpg" alt=""></p>
+<h3 id="Heterogeneous-GNNs"><a href="#Heterogeneous-GNNs" class="headerlink" title="Heterogeneous GNNs"></a>Heterogeneous GNNs</h3><ul>
+<li>RGCN: 对每一个边类型设计一个独特的投射矩阵(linear projection weight)<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcymdx80g0j30fi0gkglu.jpg" alt=""></li>
+<li>HetGNN: 利用多个RNN对不同类型的节点进行提取信息并融合 multi-model 的信息<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcynf20dvvj31jy0rygpc.jpg" alt=""></li>
+<li>HAN: 利用多个attention对通过元路径获得的邻接矩阵进行分别聚合并融合<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcymgvmnozj30ii0b8dgl.jpg" alt=""></li>
+</ul>
+<p>这些模型通常只用节点类型或边类型来设计权重矩阵，但对于出现频率很低的边，很难学习到准确的<strong>relation-specific</strong>的权重矩阵</p>
+<h2 id="HETEROGENEOUS-GRAPH-TRANSFORMER"><a href="#HETEROGENEOUS-GRAPH-TRANSFORMER" class="headerlink" title="HETEROGENEOUS GRAPH TRANSFORMER"></a>HETEROGENEOUS GRAPH TRANSFORMER</h2><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcty55btwvj31ei0qen13.jpg" alt=""></p>
+<p>该模型可以被拆分为三个模块，异质互注意力模块、异质消息传递模块、类型聚集模块</p>
+<h3 id="Heterogeneous-Mutual-Attention"><a href="#Heterogeneous-Mutual-Attention" class="headerlink" title="Heterogeneous Mutual Attention"></a>Heterogeneous Mutual Attention</h3><p>先基于如下公式进行计算<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcty4i46gwj30nw03k748.jpg" alt=""><br>对于传统图注意力机制，假设节点处于同一个特征分布，将忽略了异质性，于是我们通过基于元关系$&lt;\tau(s), \phi(e), \tau(t)&gt;$这个三元组，类似于Transformer的结构将目标节点$t$作为Query向量，源节点$s$作为Key向量，同时我们将每一个元关系</p>
 
         </div>
         
