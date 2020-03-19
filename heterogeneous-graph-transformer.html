@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
 <meta property="article:published_time" content="2020-03-11T15:11:10.000Z">
-<meta property="article:modified_time" content="2020-03-19T14:05:09.592Z">
+<meta property="article:modified_time" content="2020-03-19T16:54:43.966Z">
 <meta property="article:tag" content="heterogeneous information network">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="graph attention">
@@ -151,7 +151,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    22 minutes read (About 3300 words)
+                    24 minutes read (About 3567 words)
                 </span>
                 
                 
@@ -235,10 +235,31 @@
 <li>relation type $\phi$ with an reverse relation type $\phi^{-1}$</li>
 </ul>
 </blockquote>
-<h3 id="5-2-Experimental-Setup"><a href="#5-2-Experimental-Setup" class="headerlink" title="5.2 Experimental Setup"></a>5.2 Experimental Setup</h3><p><strong>Tasks</strong>:</p>
-<ol>
-<li>三个节点分类任务，Paper-Field(L1)、Paper-Field(L2)、Paper-Venue。分别表示文章属于一级（二级）领域中哪一个、已经文章发表对应的会议。类似DBLP中判断文章的类型(data mining, machine learning, etc.)</li>
-</ol>
+<h3 id="5-2-Experimental-Setup"><a href="#5-2-Experimental-Setup" class="headerlink" title="5.2 Experimental Setup"></a>5.2 Experimental Setup</h3><p><strong>任务</strong>:</p>
+<ul>
+<li>三个节点分类任务，Paper-Field(L1)、Paper-Field(L2)、Paper-Venue。分别表示文章属于一级（二级）领域中哪一个、已经文章发表对应的会议。类似DBLP中判断文章的类型(data mining, machine learning, etc)</li>
+<li>一个链接预测任务，Author Disambiguation，同名作者与其对应论文进行链接预测任务</li>
+</ul>
+<p><strong>数据划分</strong></p>
+<ul>
+<li>训练集 2015年之前</li>
+<li>验证集 2015-2016年</li>
+<li>预测集 2016-2019</li>
+</ul>
+<p><strong>验证指标</strong></p>
+<ul>
+<li>Mean Reciprocal Rank(MRR)</li>
+<li>Normalized Discounted Cumulative Gain(NDCG)</li>
+</ul>
+<p><strong>初始化特征</strong></p>
+<ul>
+<li>paper： 用XLNet预训练title的词向量</li>
+<li>author： 用发表过paper的平均表示</li>
+<li>field、venue、institude：用meta2vec进行预训练获得</li>
+</ul>
+<p>对所有同质图的GNN首先将异质节点特征分别过一个线性层，使表示投射到同一个特征空间。</p>
+<h3 id="5-3-Experimental-Results"><a href="#5-3-Experimental-Results" class="headerlink" title="5.3 Experimental Results"></a>5.3 Experimental Results</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczokaflsnj30ym0u0423.jpg" alt=""><br>从表格中可以看出，HGT模型的效果均好于其他模型，并且所使用的参数也更少，说明利用这个元关系有更好的泛化效果。从消融实验中可以看出对不同的元关系设置相对应的参数矩阵、以及RTE模块均有相应的提升</p>
+<h3 id="5-4-Visualize-Meta-Relation-Attention"><a href="#5-4-Visualize-Meta-Relation-Attention" class="headerlink" title="5.4 Visualize Meta Relation Attention"></a>5.4 Visualize Meta Relation Attention</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczq12uo2ej30o40aagmc.jpg" alt=""></p>
 
         </div>
         
