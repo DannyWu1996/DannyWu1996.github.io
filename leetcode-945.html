@@ -10,16 +10,16 @@
 <title>Minimum Increment to Make Array Unique</title>
 
 
-    <meta name="description" content="Minimum Increment to Make Array Uniqueleetcode problem 945  Level: Medium Description: Given an array of integers A, a move consists of choosing any A[i], and incrementing it by 1. Tags: Array">
+    <meta name="description" content="leetcode problem 945  Level: Medium Description: Given an array of integers A, a move consists of choosing any A[i], and incrementing it by 1. Tags: Array">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Minimum Increment to Make Array Unique">
 <meta property="og:url" content="http://dannywu1996.github.io/leetcode-945.html">
 <meta property="og:site_name">
-<meta property="og:description" content="Minimum Increment to Make Array Uniqueleetcode problem 945  Level: Medium Description: Given an array of integers A, a move consists of choosing any A[i], and incrementing it by 1. Tags: Array">
+<meta property="og:description" content="leetcode problem 945  Level: Medium Description: Given an array of integers A, a move consists of choosing any A[i], and incrementing it by 1. Tags: Array">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
 <meta property="article:published_time" content="2020-03-19T06:18:04.000Z">
-<meta property="article:modified_time" content="2020-03-19T07:10:33.448Z">
+<meta property="article:modified_time" content="2020-03-19T08:34:02.292Z">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://dannywu1996.github.io/images/og_image.png">
@@ -146,7 +146,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    a few seconds read (About 98 words)
+                    a minute read (About 186 words)
                 </span>
                 
                 
@@ -164,20 +164,28 @@
             
         </h1>
         <div class="content">
-            <h1 id="Minimum-Increment-to-Make-Array-Unique"><a href="#Minimum-Increment-to-Make-Array-Unique" class="headerlink" title="Minimum Increment to Make Array Unique"></a>Minimum Increment to Make Array Unique</h1><p><a href="https://leetcode.com/problems/minimum-increment-to-make-array-unique/">leetcode problem 945</a></p>
+            <p><a href="https://leetcode.com/problems/minimum-increment-to-make-array-unique/">leetcode problem 945</a></p>
 <ul>
 <li>Level: Medium</li>
 <li>Description: Given an array of integers <code>A</code>, a move consists of choosing any <code>A[i]</code>, and incrementing it by <code>1</code>.</li>
 <li>Tags: Array</li>
 </ul>
 <a id="more"></a>
-<h2 id="Straight-Forward"><a href="#Straight-Forward" class="headerlink" title="Straight Forward"></a>Straight Forward</h2><p>simply sort the original array, check whether current value is less or equal to the “need” one.</p>
+<h2 id="Straight-Forward"><a href="#Straight-Forward" class="headerlink" title="Straight Forward"></a>Straight Forward</h2><ol>
+<li>sort the original array</li>
+<li>iterate the sorted array while adding the cost of each element in order to satisfy the given requirement.</li>
+</ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minIncrementForUnique</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        sort(A.begin(), A.end());</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>, next=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> a: A)&#123;</span><br><span class="line">            res += max(next-a, <span class="number">0</span>);</span><br><span class="line">            next = max(a, next) + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Time Complexity: O(NlogN)</li>
-<li>Space Complexity: O(1)</li>
+<li>Time Complexity: <code>O(Nlog(N))</code></li>
+<li>Space Complexity: <code>O(1)</code></li>
 </ul>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+<h2 id="O-Klog-k-by-using-map"><a href="#O-Klog-k-by-using-map" class="headerlink" title="O(Klog(k)) by using map"></a>O(Klog(k)) by using map</h2><p>Same idea as the first one, only difference is that now we count occurrences of each elements and calculate total cost for the same element.</p>
+<ul>
+<li>Time Complexity: <code>O(N+Klog(K))</code> using TreeMap in C+++</li>
+<li>Space Complexity: <code>O(K)</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minIncrementForUnique</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; A)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; <span class="built_in">map</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> e: A) <span class="built_in">map</span>[e]+=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>, next=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it: <span class="built_in">map</span>)&#123;</span><br><span class="line">            res += max(next-it.first, <span class="number">0</span>)*it.second + (it.second<span class="number">-1</span>)*it.second/<span class="number">2</span>;</span><br><span class="line">            next = max(next, it.first) + it.second;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
         </div>
         
         <div class="level is-size-7 is-uppercase">
