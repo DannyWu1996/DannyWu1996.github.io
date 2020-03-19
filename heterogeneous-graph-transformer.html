@@ -19,7 +19,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
 <meta property="article:published_time" content="2020-03-11T15:11:10.000Z">
-<meta property="article:modified_time" content="2020-03-19T11:15:05.956Z">
+<meta property="article:modified_time" content="2020-03-19T14:05:09.592Z">
 <meta property="article:tag" content="heterogeneous information network">
 <meta property="article:tag" content="transformer">
 <meta property="article:tag" content="graph attention">
@@ -151,7 +151,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    16 minutes read (About 2416 words)
+                    22 minutes read (About 3300 words)
                 </span>
                 
                 
@@ -211,7 +211,35 @@
 <h4 id="Transformer-Attention"><a href="#Transformer-Attention" class="headerlink" title="Transformer Attention"></a>Transformer Attention</h4><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcze7vva0zj316u0oet9t.jpg" alt=""><br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcze96gkn7j30tk048jrb.jpg" alt=""></p>
 <h4 id="Heterogeneous-Graph-Transformer-1"><a href="#Heterogeneous-Graph-Transformer-1" class="headerlink" title="Heterogeneous Graph Transformer"></a>Heterogeneous Graph Transformer</h4><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczdk0jtuaj30ss0bi74t.jpg" alt=""><br>传统的<strong>Transformer</strong>结构利用<em>dot-product</em>进行计算attention系数（Query Vector 和 Key Vector之间的相似度），而本文为了建模边的异质性，则使用edge-specific的矩阵来捕捉不同的语义关系。$\mu_{&lt;\tau(s), \phi(e), \tau(t)&gt;}$可以理解为对该<strong>meta-relation</strong>的一个<strong>权重</strong>（学习得到）</p>
 <h3 id="3-2-Heterogeneous-Message-Passing"><a href="#3-2-Heterogeneous-Message-Passing" class="headerlink" title="3.2 Heterogeneous Message Passing"></a>3.2 Heterogeneous Message Passing</h3><p>和上一个模块类似，这里先对每个源节点特征进行投射相应特征空间，然后利用边的权重矩阵进行构建边的依赖性。其实本质思想就是，一个节点特征，首先先过一个<strong>节点类型对应</strong>的投射矩阵，然后再过相应的<strong>边类型对应</strong>的投射矩阵，来建立这种节点与边的<strong>异质性</strong>。<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczg4vuwotj30t4066aa8.jpg" alt=""></p>
-<h3 id="3-3-Target-Specific-Aggregation"><a href="#3-3-Target-Specific-Aggregation" class="headerlink" title="3.3 Target-Specific Aggregation"></a>3.3 Target-Specific Aggregation</h3>
+<h3 id="3-3-Target-Specific-Aggregation"><a href="#3-3-Target-Specific-Aggregation" class="headerlink" title="3.3 Target-Specific Aggregation"></a>3.3 Target-Specific Aggregation</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczgfaxyjtj30s002umx4.jpg" alt=""><br>此时获得到的$\widetilde{H}^{(l)}[t]$是经过源节点类型和边类型矩阵线性组合后的结果<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczgfgl8pyj30sg02ut8m.jpg" alt=""><br>对聚合的信息进行转化成目标节点对应的特征分布，然后一个短路连接汇聚自身信息。</p>
+<p><strong>Summary</strong>：如果直接那meta-relation每个构造一个矩阵的话，那么参数不能得到共享，明显很多有meta-relation之间相关性都忽视了，而现在这样相同类型共享参数，只是改变了中间关系的投射矩阵，使很多关系数目很少也能得到相应的泛化</p>
+<h3 id="3-4-Relative-Temporal-Encoding"><a href="#3-4-Relative-Temporal-Encoding" class="headerlink" title="3.4 Relative Temporal Encoding"></a>3.4 Relative Temporal Encoding</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczi7odbypj30u20iu75d.jpg" alt=""></p>
+<p>通常构建网络的dynamic性质一般进行时间片切割，对切割的时间片单独作为一个图，但是这样不同时间片上的结构依赖会丢失，并且$T_1$时间的节点表示可能依赖于$T_n$时间片上的边。所以更恰当的做法应当使用一个动态图将所有边进行保留，是不同时间片上的节点和边可以交互。<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gcziiopi8cj30sw08a74j.jpg" alt=""><br>其中$\Delta T(t,s)=T(t)-T(s)$为相对时间差，$i$表示维度，为了使RTE模块的表示能和节点嵌入相加，使其和$d$(即节点表示维度)相同，每个维度都是不同频率的$sin/cos$构建的正弦曲线（类似于在这个函数上进行采点）</p>
+<blockquote>
+<p>We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training.</p>
+</blockquote>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczilz2y44j30so02qmx1.jpg" alt=""></p>
+<h2 id="4-WEB-SCALE-HGT-TRAINING"><a href="#4-WEB-SCALE-HGT-TRAINING" class="headerlink" title="4. WEB-SCALE HGT TRAINING"></a>4. WEB-SCALE HGT TRAINING</h2><h3 id="4-1-HGSampling"><a href="#4-1-HGSampling" class="headerlink" title="4.1 HGSampling"></a>4.1 HGSampling</h3><p><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczjgi4wd9j31f60l6aei.jpg" alt=""><br>核心思想就是对目标节点的邻居中每一种类型$\tau$维护一个bucket $B[\tau]$，每次基于各个bucket中的节点的<strong>重要性</strong>（相关度、采样的概率）进行采相同数目的节点，并且有以下优点：</p>
+<ul>
+<li>使每种类型的节点和边数目相近</li>
+<li>使采样获得的子图尽可能紧密（Dense)以减少信息损失，并且可以减少采样方差</li>
+</ul>
+<h3 id="4-2-Inductive-Timestamp-Assignment"><a href="#4-2-Inductive-Timestamp-Assignment" class="headerlink" title="4.2 Inductive Timestamp Assignment"></a>4.2 Inductive Timestamp Assignment</h3><p>引入一些先验信息，异质图中存在一些节点明显具有固定时间戳，如<strong>文章</strong>取决于发表日期，这类节点作为“事件”节点，也有类似<strong>会议</strong>节点时间戳应该基于与其相连的事件节点（采样）的时刻。所以对于这种类型节点，其初始时间戳为空，表明其可以与任意时间相连，这样在采样时就可以自适应的获取对应的时间戳。</p>
+<h2 id="5-EVALUATION"><a href="#5-EVALUATION" class="headerlink" title="5 EVALUATION"></a>5 EVALUATION</h2><h3 id="5-1-Web-Scale-Datasets"><a href="#5-1-Web-Scale-Datasets" class="headerlink" title="5.1 Web-Scale Datasets"></a>5.1 Web-Scale Datasets</h3><p>主要体现数据量数据规模的大<br><img src="https://tva1.sinaimg.cn/large/00831rSTly1gczknqfeeaj31gc07e75p.jpg" alt=""></p>
+<blockquote>
+<p>The Field nodes in OAG are categorized into six levels from $L_0$ to $L_5$, which are organized with a hierachical tree.<br>Claming all these element are differentiated:</p>
+<ul>
+<li>author orders</li>
+<li>venue types</li>
+<li>self-loop </li>
+<li>relation type $\phi$ with an reverse relation type $\phi^{-1}$</li>
+</ul>
+</blockquote>
+<h3 id="5-2-Experimental-Setup"><a href="#5-2-Experimental-Setup" class="headerlink" title="5.2 Experimental Setup"></a>5.2 Experimental Setup</h3><p><strong>Tasks</strong>:</p>
+<ol>
+<li>三个节点分类任务，Paper-Field(L1)、Paper-Field(L2)、Paper-Venue。分别表示文章属于一级（二级）领域中哪一个、已经文章发表对应的会议。类似DBLP中判断文章的类型(data mining, machine learning, etc.)</li>
+</ol>
+
         </div>
         
         <div class="level is-size-7 is-uppercase">
