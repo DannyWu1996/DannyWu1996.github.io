@@ -7,15 +7,19 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Tag: Unsupervised</title>
+<title>graph_transformer_network</title>
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="http://dannywu1996.github.io/tags/Unsupervised/index.html">
+    <meta name="description" content="Graph Transformer Network本文核心在于基于已有的网络结构去学习生成元路径来获取节点高阶邻居，然后用图卷积在新生成的网络结构上进行聚合信息来学习表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="graph_transformer_network">
+<meta property="og:url" content="http://dannywu1996.github.io/graph-transformer-network.html">
 <meta property="og:site_name">
+<meta property="og:description" content="Graph Transformer Network本文核心在于基于已有的网络结构去学习生成元路径来获取节点高阶邻居，然后用图卷积在新生成的网络结构上进行聚合信息来学习表示">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://dannywu1996.github.io/images/og_image.png">
+<meta property="article:published_time" content="2020-05-06T03:06:07.000Z">
+<meta property="article:modified_time" content="2020-05-06T03:06:07.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://dannywu1996.github.io/images/og_image.png">
 
@@ -75,7 +79,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="" height="28">
+                <img src="/images/logo.svg" alt="graph_transformer_network" height="28">
             
             </a>
         </div>
@@ -124,58 +128,92 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Unsupervised</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-27T02:04:29.000Z">2020-02-27</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/%E8%AE%BA%E6%96%87%E5%88%86%E4%BA%AB/">论文分享</a>
-                </div>
+                <time class="level-item has-text-grey" datetime="2020-05-06T03:06:07.000Z">2020-05-06</time>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    14 minutes read (About 2148 words)
+                    9 minutes read (About 1302 words)
                 </span>
                 
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span> visits
+                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/structral-deep-clustering-network.html">Structral Deep Clustering Network</a>
+                graph_transformer_network
             
         </h1>
         <div class="content">
-            <h1 id="Structral-Deep-Clustering-Network"><a href="#Structral-Deep-Clustering-Network" class="headerlink" title="Structral Deep Clustering Network"></a>Structral Deep Clustering Network</h1><p><strong>WWW2020</strong><br>本文为尝试将结构化信息建模在深度聚类任务中，并提出了全新的结构化深度聚类模型，其中包括一个DNN模块、GCN模块和双重自监督模块，并通过一个delivery operator成功将autoencoder和GCN所学到的表示结合在一起，并从理论上证明了其有效性。<a href="https://arxiv.org/abs/2002.01633">Paper</a> </p>
+            <h1 id="Graph-Transformer-Network"><a href="#Graph-Transformer-Network" class="headerlink" title="Graph Transformer Network"></a>Graph Transformer Network</h1><p>本文核心在于基于已有的网络结构去学习生成元路径来获取节点高阶邻居，然后用图卷积在新生成的网络结构上进行聚合信息来学习表示</p>
+<a id="more"></a>
+
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>本文针对现有GNN作用于<strong>fixed</strong>且<strong>homogenoeous</strong>网络中的问题，提出了一个Graph Transformer Network（GTNs）能够生成新的网络结构（异质图），同时基于端到端的方式在新学到的图中学习节点表示。GTN中的核心Graph Transformer layer可以从多种边类型中学习一种soft-selection，并将这些边的关系进行组合生成类似meta-path的高阶关系。不需要领域信息的前提下仅利用数据和任务学习到的网络结构，结合图卷积模块生成有效的节点表示，在节点分类任务上取得了<em>SOTA</em>的效果</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>传统异质图通过利用预先定义的元路径将其转化为同质图，然后利用同质图下的图神经网络在新生成的同质图下进行聚合信息，这种两阶段的模式依赖于所定义的元路径的合理性。</p>
+<p>本文针对这个问题提出了一个Graph Transformer Network（GTN）来通过端到端的方式根据输入的异质图学习适应于数据和任务的元路径，并基于该元路径生成新的网络结构，后续对所生成图结构通过图卷积模块聚合学习其节点表示。</p>
+<p><strong>Contributions</strong></p>
+<ul>
+<li>提出了一个全新的GTN框架，能够在原有图的基础上学习有用的元路径和多跳连接，从而学习到可靠的节点表示</li>
+<li>图生成的过程具有一定的解释性（<strong>还行</strong>），并且模型可以生成一些可靠的元路径（<strong>作为一个参考</strong>）</li>
+<li>对比其他依赖于预定于元路径的模型，取得了<em>SOTA</em>效果</li>
+</ul>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><h3 id="Preliminaries"><a href="#Preliminaries" class="headerlink" title="Preliminaries"></a>Preliminaries</h3><p>异质图可以被表示为邻接矩阵的集合$ { A_{k} }^{K}_{k=1} $，其中$K$表示边类型的数目，所以对于每一种$A_k$都可以看做看做仅含有某种边类型的邻居矩阵。</p>
+<p><strong>元路径</strong>：定义就忽略了，简单来说可以理解为预定义好的反映节点与节点之间的高阶关系<br>这里要指出对于元路径，可以由多种边类型的邻接矩阵相乘获得，如$A\rightarrow P \rightarrow C$可以由$A_{AP}$*$A_{PC}$</p>
+<p><strong>图卷积</strong>：略</p>
+<h3 id="元路径生成"><a href="#元路径生成" class="headerlink" title="元路径生成"></a>元路径生成</h3><p>本文所提出的GTN通过给定的数据和任务来学习到相应的元路径，通过这样的方式可以学习到更多有用的元路径<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gehw8kib8wj314s0sgjt3.jpg" alt=""><br>首先先从邻接矩阵集合$\mathbb{A}$中通过<em>soft-selection</em>选出相应的<strong>candidate</strong> $\mathcal{Q}_1, \mathcal{Q}_2$，然后可以通过对这两种关系的组合生成新的网络结构</p>
+<p>$\mathcal{Q}$可以看做是也有边关系的凸组合：<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gehwno3khhj313402amx1.jpg" alt=""><br>其中$\phi$为卷积层，$W_\phi \in \mathbf{R}^{1\times 1 \times K}$为卷积层$\phi$的参数（有点类似于channel-attention pooling）<br>为了保证计算的稳定性，对所获得的新的网络结构进行行归一化度数$A^{(l)} = D^{-1} Q_1 Q_2$</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gehwv9hf6gj313805gjrc.jpg" alt=""><br>每一层GT都可以学习到一个新的图结构，通过叠加$l$层我们可以学习到任意长度为$l$的元路径下的图结构，如果$\alpha$不是one-hot向量时，$A_P$可以被看做所有长度为$l$的元路径的带权组合，通过引入单位矩阵$I$，使$A_0=I$可以避免只能学到与GT层数相同的元路径。</p>
+<h3 id="Graph-Transformer-Networks"><a href="#Graph-Transformer-Networks" class="headerlink" title="Graph Transformer Networks"></a>Graph Transformer Networks</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gehx8u4ockj312o0u040a.jpg" alt=""><br>相当于生成多种图结构，然后通过图卷积将几个图结构聚合好的信息进行拼接。<br><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geiisrvbwoj313804saa2.jpg" alt=""></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p><strong>主要针对三个问题：</strong></p>
+<blockquote>
+<ul>
+<li>Are the new graph structures generated by GTN effective for learning node representation</li>
+<li>Can GTN adaptively produce a variable length of meta-paths depending on datasets</li>
+<li>How can we interpret the importance of each meta-path from the adjacency matrix generated by GTNs</li>
+</ul>
+</blockquote>
+<p><strong>Datasets:</strong><br><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geiiw1bdrkj313g082glz.jpg" alt=""><br>其中DBLP数据集使用的边类型为$(PA, AP, PC, CP)$, ACM数据集使用边类型为$(PA, AP, PS, SP)$</p>
+<p><strong>Implementation Details:</strong></p>
+<ul>
+<li>embedding dimension: 64</li>
+<li>optimizer: Adam</li>
+<li>walk length(for random walk based model): 100 per node</li>
+<li>window size(for random walk based model): 5 with 7 negative samples</li>
+<li>$1 /times 1$ convolution layers initialial value: constant</li>
+</ul>
+<h3 id="Baselines"><a href="#Baselines" class="headerlink" title="Baselines"></a>Baselines</h3><p><strong>Conventional Network Embedding methods</strong></p>
+<ul>
+<li>DeepWalk</li>
+<li>metapath2vec</li>
+</ul>
+<p><strong>GNN-based methods</strong></p>
+<ul>
+<li>GCN</li>
+<li>GAT</li>
+<li>HAN (pre-defined meta-paths)</li>
+</ul>
+<h3 id="Results-on-Node-Classification"><a href="#Results-on-Node-Classification" class="headerlink" title="Results on Node Classification"></a>Results on Node Classification</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geij5xfyncj312y0a4wfc.jpg" alt=""></p>
+<h3 id="Interpretation-of-Graph-Tranformer-Networks"><a href="#Interpretation-of-Graph-Tranformer-Networks" class="headerlink" title="Interpretation of Graph Tranformer Networks"></a>Interpretation of Graph Tranformer Networks</h3><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geij8y2hqhj312y04smx7.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geij9qrnhoj3132074t8u.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geijr3kflkj313o0dst9h.jpg" alt=""></p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geijrag3loj314o0oagmq.jpg" alt=""></p>
+
         </div>
         
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/structral-deep-clustering-network.html#more">Read More</a>
-                </div>
-            </div>
-        </div>
         
         
     </div>
@@ -185,7 +223,19 @@
 
 
 
-
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/leetcode-bfs.html">
+                <span class="level-item">leetcode_bfs</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 </div>
@@ -924,11 +974,11 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="" height="28">
+                    <img src="/images/logo.svg" alt="graph_transformer_network" height="28">
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2020 &nbsp;
+                &copy; 2020 graph_transformer_network&nbsp;
                 Danny Wu Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
                         href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
                 
